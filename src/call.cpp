@@ -31,6 +31,7 @@
 //DRing
 #include <account_const.h>
 #include <call_const.h>
+#include <security_const.h>
 
 //Ring library
 #include "dbus/callmanager.h"
@@ -341,8 +342,8 @@ Call* CallPrivate::buildExistingCall(const QString& callId)
    }
 
    //Load the certificate if it's now available
-   if (!call->certificate() && !details[DRing::Call::Details::TLS_PEER_CERT].isEmpty()) {
-      call->d_ptr->m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::Call::Details::TLS_PEER_CERT].toLatin1(),call->account());
+   if (!call->certificate() && !details[DRing::TlsTransport::TLS_PEER_CERT].isEmpty()) {
+      call->d_ptr->m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::TlsTransport::TLS_PEER_CERT].toLatin1(),call->account());
    }
 
    return call;
@@ -386,8 +387,8 @@ Call* CallPrivate::buildIncomingCall(const QString& callId)
    }
 
    //Load the certificate if it's now available
-   if (!call->certificate() && !details[DRing::Call::Details::TLS_PEER_CERT].isEmpty()) {
-      call->d_ptr->m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::Call::Details::TLS_PEER_CERT].toLatin1(),call->account());
+   if (!call->certificate() && !details[DRing::TlsTransport::TLS_PEER_CERT].isEmpty()) {
+      call->d_ptr->m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::TlsTransport::TLS_PEER_CERT].toLatin1(),call->account());
    }
 
    return call;
@@ -420,8 +421,8 @@ Call* CallPrivate::buildRingingCall(const QString & callId)
    }
 
    //Load the certificate if it's now available
-   if (!call->certificate() && !details[DRing::Call::Details::TLS_PEER_CERT].isEmpty()) {
-      call->d_ptr->m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::Call::Details::TLS_PEER_CERT].toLatin1(),call->account());
+   if (!call->certificate() && !details[DRing::TlsTransport::TLS_PEER_CERT].isEmpty()) {
+      call->d_ptr->m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::TlsTransport::TLS_PEER_CERT].toLatin1(),call->account());
    }
 
    return call;
@@ -999,8 +1000,8 @@ Call::State CallPrivate::stateChanged(const QString& newStateName)
          m_PeerName = details[CallPrivate::DetailsMapFields::PEER_NAME];
 
       //Load the certificate if it's now available
-      if (!q_ptr->certificate() && !details[DRing::Call::Details::TLS_PEER_CERT].isEmpty()) {
-         m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::Call::Details::TLS_PEER_CERT].toLatin1(),q_ptr->account());
+      if (!q_ptr->certificate() && !details[DRing::TlsTransport::TLS_PEER_CERT].isEmpty()) {
+         m_pCertificate = CertificateModel::instance()->getCertificateFromContent(details[DRing::TlsTransport::TLS_PEER_CERT].toLatin1(),q_ptr->account());
       }
 
       try {
